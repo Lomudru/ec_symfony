@@ -3,3 +3,6 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+form_save:
+    path: /form/save
+    controller: App\Controller\HomeController::saveForm

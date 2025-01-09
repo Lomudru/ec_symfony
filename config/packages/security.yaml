@@ -4,11 +4,10 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
     providers:
-        # Utilisation d'un fournisseur basé sur l'entité User
         users_in_database:
             entity:
                 class: App\Entity\User
-                property: email  # Utilise l'email comme identifiant unique
+                property: email 
 
     firewalls:
         dev:
@@ -17,7 +16,7 @@ security:
 
         main:
             lazy: true
-            provider: users_in_database  # Utilise le fournisseur basé sur la base de données
+            provider: users_in_database 
             form_login:
                 login_path: auth.login
                 check_path: auth.login
@@ -34,6 +33,5 @@ security:
 
     # Access control
     access_control:
-        # Par exemple, restreindre l'accès à certaines pages en fonction des rôles
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

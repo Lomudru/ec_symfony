@@ -13,7 +13,6 @@ class LoginController extends AbstractController
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            // Rediriger vers la page de login si l'utilisateur n'est pas connecté
             return $this->redirectToRoute('app.home');
         }
 
