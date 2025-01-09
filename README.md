@@ -40,6 +40,7 @@ Si vous n'avez pas encore cloné le projet, commencez par le faire via Git :
 php bin/console doctrine:database:create
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
 ```
 
 ### 4. Démarrer le serveur Symfony
