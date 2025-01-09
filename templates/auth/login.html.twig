@@ -5,6 +5,9 @@
 {% block body %}
     <div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg">
         <div class="card max-w-[370px] w-full">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
             <form action="{{ path('auth.login') }}" class="card-body flex flex-col gap-5 p-10" id="sign_in_form" method="post">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <div class="text-center mb-2.5">
