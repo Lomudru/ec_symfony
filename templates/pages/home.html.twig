@@ -29,7 +29,7 @@
                                 </p>
                             </div>
                             <div class="flex justify-center">
-                                <a class="btn btn-dark" href="#" data-modal-toggle="#book_modal">
+                                <a class="btn btn-dark" href="#" data-modal-toggle="#book_modal" onclick="resetBook();">
                                     Ajouter une lecture
                                 </a>
                             </div>
@@ -54,5 +54,39 @@
             </div>
         </div>
         <!-- end: grid -->
+        <script>
+            function showBook(bookId){
+
+                fetch('get-bookReading', {
+                    method: 'POST',
+                    body: JSON.stringify({ bookId: bookId }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    let response = data[0];
+                    document.getElementById("idBookReading").value = response["id"];
+                    document.getElementById("book").value = response["bookId"];
+                    document.getElementById("descriptionBook").value = response["desc"];
+                    document.getElementById("rating").value = parseInt(response["note"]);
+                    document.getElementById("finished").checked = response["checked"];
+
+                    const modalEl = document.querySelector('#book_modal');
+                    const modal = KTModal.getInstance(modalEl);
+                    modal.show();
+                })
+                .catch(error => console.log('Erreur:', error));
+            }
+            function resetBook(){
+                document.getElementById("idBookReading").value = "";
+                document.getElementById("book").value = 1;
+                document.getElementById("descriptionBook").value = "";
+                document.getElementById("rating").value = 1;
+                document.getElementById("finished").checked = false;
+            }
+        </script>
     </div>
 {% endblock %}

@@ -6,3 +6,6 @@ controllers:
 form_save:
     path: /form/save
     controller: App\Controller\HomeController::saveForm
+get_bookReading:
+    path: /get-bookReading
+    controller: App\Controller\HomeController::getBookReadingData

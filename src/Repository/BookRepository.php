@@ -18,10 +18,37 @@ class BookRepository extends ServiceEntityRepository
 
     /**
      * Method to find all Book entities
+     * @return array
      */
     public function findAll(): array
     {
         return $this->createQueryBuilder('r')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Method to find all Book entities by bookId
+     * @param int $bookId
+     * @return array
+     */
+    public function findById(int $bookId): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.id = :bookId')
+            ->setParameter('bookId', $bookId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByUserId(int $userId, bool $readState): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.user_id = :userId')
+            ->andWhere('r.is_read = :isRead')
+            ->setParameter('userId', $userId)
+            ->setParameter('isRead', $readState)
+            ->orderBy('r.created_at', 'DESC')
             ->getQuery()
             ->getResult();
     }

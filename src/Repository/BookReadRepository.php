@@ -33,4 +33,34 @@ class BookReadRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findLastByUserId(int $userId, bool $readState): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.user_id = :userId')
+            ->andWhere('r.is_read = :isRead')
+            ->setParameter('userId', $userId)
+            ->setParameter('isRead', $readState)
+            ->orderBy('r.created_at', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * Method to find ReadBook entities by is id
+     * @param int $id
+     * @return array
+     */
+    public function findById(int $id): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
 }
+
