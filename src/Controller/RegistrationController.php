@@ -41,17 +41,22 @@ class RegistrationController extends AbstractController
                 $error["Checked"] = "Vous devez accepter les conditions générales d'utilisation";
             }
             
-
-            $user = new User();
-            $user->setEmail($email);
-            // Hash the password
-            $passwordHashed = $passwordHasher->hashPassword($user, $password);
-            $user->setPassword($passwordHashed);
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('auth.login');
+            if(sizeof($error) == 0){
+                $user = new User();
+                $user->setEmail($email);
+                // Hash the password
+                $passwordHashed = $passwordHasher->hashPassword($user, $password);
+                $user->setPassword($passwordHashed);
+    
+                $entityManager->persist($user);
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('auth.login');
+            }else{
+                return $this->render('auth/register.html.twig', [
+                    "error" => $error,
+                ]);
+            }
         }
         return $this->render('auth/register.html.twig', [
             "error" => $error,

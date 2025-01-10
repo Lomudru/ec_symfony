@@ -6,7 +6,9 @@
     <div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg">
         <div class="card max-w-[370px] w-full">
             {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" role="alert">
+                    <span class="block sm:inline">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                </div>
             {% endif %}
             <form action="{{ path('auth.login') }}" class="card-body flex flex-col gap-5 p-10" id="sign_in_form" method="post">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

@@ -6,9 +6,12 @@
     <!-- Page -->
     <div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg">
         <div class="card max-w-[370px] w-full">
-            {% for key,value in error %}
-                <p>{{ value }}</p>
+            {% for key, value in error %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3" role="alert">
+                    <span class="block sm:inline">{{ value }}</span>
+                </div>
             {% endfor %}
+
             <form action="{{path('auth.register') }}" class="card-body flex flex-col gap-5 p-10" id="sign_up_form" method="post">
                 <div class="text-center mb-2.5">
                     <h3 class="text-lg font-medium text-gray-900 leading-none mb-2.5">

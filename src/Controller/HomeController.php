@@ -66,13 +66,17 @@ class HomeController extends AbstractController
         }
         $categoryCount = ["category" => $category, "count" => $count];
 
+        // Get the data for the searchBar*
+        $allBooksRating = $this->BookRepository->getAllBookWithRating();
+
         return $this->render('pages/home.html.twig', [
             'booksRead' => $booksRead,
             'booksReading' => $booksReading,
             'booksReaded' => $bookReadedReturn,
             'books' => $books,
             'email' => $userEmail, 
-            'categoryCount' => $categoryCount
+            'categoryCount' => $categoryCount,
+            'allBooks' => $allBooksRating,
         ]);
     }
 

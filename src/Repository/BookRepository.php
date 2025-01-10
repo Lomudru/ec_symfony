@@ -5,15 +5,19 @@ namespace App\Repository;
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\DBAL\Connection;
 
 /**
  * @extends ServiceEntityRepository<Book>
  */
 class BookRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $connection;
+
+    public function __construct(ManagerRegistry $registry, Connection $connection)
     {
         parent::__construct($registry, Book::class);
+        $this->connection = $connection;
     }
 
     /**
@@ -53,6 +57,19 @@ class BookRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getAllBookWithRating(){
+        $sql = "
+        SELECT b.name, COALESCE(AVG(br.rating), 0) AS rating, b.description
+        FROM book AS b
+        LEFT JOIN book_read AS br
+        ON br.book_id = b.id
+        GROUP BY b.id;
+        ";
+
+        $stmt = $this->connection->executeQuery($sql);
+
+        return $stmt->fetchAllAssociative();
+    }
 
 //    /**
 //     * @return Book[] Returns an array of Book objects
